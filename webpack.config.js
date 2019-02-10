@@ -24,5 +24,7 @@ module.exports = {
     historyApiFallback: true, // Using HTML5 History API based routing
     overlay: true, // Error overlay to capture compilation related warnings and errors
     contentBase: join(__dirname, 'dist') // Contents not passing through webpack are served directly from this folder
+    // proxy: { "/api": "http://my.api/endpoint" } // If using multiple servers, proxy WDS to them
+    // header: // Attach custom headers to your requests here
   }
 } 
