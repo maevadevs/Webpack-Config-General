@@ -33,15 +33,14 @@ const plugins = [
 // --- LOADERS ---
 // ***************
 
-const module = {
+const wbpModule = env => ({
   rules: [{ 
-    // Handle CSS, SASS, and SCSS files
-    test: /\.(s)?css$|\.sass$/,
-    include: null,
-    exclude: [/node_modules/],
-    use: ['style-loader', 'css-loader', 'sass-loader']
+    test: /\.(s)?css$|\.sass$/, // Handle CSS, SASS, and SCSS files
+    // include: [], // Must be a RegExp
+    exclude: [/node_modules/], // Must be a RegExp
+    use: [{ loader: 'style-loader' }, { loader: 'css-loader',}, { loader: 'sass-loader' }]
   }]
-}
+})
 
 // --- WEBPACK-DEV-SERVER ---
 // **************************
@@ -67,5 +66,6 @@ module.exports = (env, argv) => ({
   entry, 
   output,
   plugins,
+  module: wbpModule(env),
   devServer: env === 'production' ? {} : devServer
 })
