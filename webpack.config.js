@@ -42,10 +42,10 @@ const wbpModule = env => ({
       loader: 'style-loader' 
     }, { 
       loader: 'css-loader',
-      options: { sourceMap: true }
+      options: { sourceMap: env === 'production' ? false : true }
     }, { 
       loader: 'sass-loader',
-      options: { sourceMap: true }
+      options: { sourceMap: env === 'production' ? false : true }
      }]
   }]
 })
@@ -54,8 +54,8 @@ const wbpModule = env => ({
 // **************************
 
 const devServer = {
-  host: WDS_HOST, // Defaults to `localhost`
-  port: WDS_PORT, // Defaults to 8080
+  host: WDS_HOST, // Default: `localhost`
+  port: WDS_PORT, // Default: 8080
   open: false, // Automatically open the page in browser
   historyApiFallback: true, // Using HTML5 History API based routing
   overlay: true, // Error overlay to capture compilation related warnings and errors
