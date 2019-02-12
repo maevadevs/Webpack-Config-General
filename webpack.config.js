@@ -30,6 +30,19 @@ const plugins = [
   })
 ]
 
+// --- LOADERS ---
+// ***************
+
+const module = {
+  rules: [{ 
+    // Handle CSS, SASS, and SCSS files
+    test: /\.(s)?css$|\.sass$/,
+    include: null,
+    exclude: [/node_modules/],
+    use: ['style-loader', 'css-loader', 'sass-loader']
+  }]
+}
+
 // --- WEBPACK-DEV-SERVER ---
 // **************************
 
