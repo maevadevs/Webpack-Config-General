@@ -5,6 +5,7 @@ require('dotenv').config()
 const { join } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin  =require('mini-css-extract-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const { WDS_HOST, WDS_PORT } = process.env
 
 // WEBPACK CONFIG
@@ -68,6 +69,13 @@ const devServer = {
   // header: // Attach custom headers to your requests here
 }
 
+// --- OPTIMIZATIONS FOR PRODUCTION ---
+// ************************************
+
+const optimization = {
+  minimizer: [new OptimizeCSSAssetsPlugin({})]
+}
+
 // EXPORT CONFIG
 // *************
 // 'process.env' is passed to the function during the build call
@@ -79,5 +87,6 @@ module.exports = (env, argv) => ({
   output,
   plugins,
   module: wbpModule(env),
+  optimization: env === 'production' ? optimization : {},
   devServer: env === 'production' ? {} : devServer
 })
