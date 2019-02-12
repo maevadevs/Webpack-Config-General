@@ -6,6 +6,9 @@ const { join } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin  =require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const glob = require('glob')
+const PurgecssPlugin = require('purgecss-webpack-plugin')
+
 const { WDS_HOST, WDS_PORT } = process.env
 
 // WEBPACK CONFIG
@@ -32,7 +35,11 @@ const plugins = [
     template: 'src/templates/index.html'
   }),
   // Extract CSS to separate file: main.css
-  new MiniCssExtractPlugin()
+  new MiniCssExtractPlugin(),
+  // Purge unused CSS
+  new PurgecssPlugin({
+    paths: glob.sync(`${join(__dirname, 'src')}/**/*`,  { nodir: true }),
+  })
 ]
 
 // --- LOADERS ---
@@ -73,6 +80,16 @@ const devServer = {
 // ************************************
 
 const optimization = {
+  splitChunks: {
+    cacheGroups: {
+      styles: {
+        name: 'styles',
+        test: /\.css$/,
+        chunks: 'all',
+        enforce: true
+      }
+    }
+  },
   minimizer: [new OptimizeCSSAssetsPlugin({})]
 }
 
