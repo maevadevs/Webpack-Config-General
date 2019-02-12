@@ -6,8 +6,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --mode development --devtool false\"",
-    "build": "webpack --mode production && yarn start"
+    "dev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development --devtool false\"",
+    "build": "webpack --env production && yarn start"
   },
   "dependencies": {
     "dotenv": "^6.2.0",
