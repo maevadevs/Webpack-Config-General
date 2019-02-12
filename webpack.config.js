@@ -27,6 +27,7 @@ const plugins = [
   // Auto-generate index.html
   new HtmlWebpackPlugin({
     title: 'Webpack Demo',
+    template: 'src/templates/index.html'
   })
 ]
 

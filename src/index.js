@@ -11,4 +11,4 @@ import './index.scss'
 // COMPONENT
 // *********
 
-document.body.appendChild(Component())
+document.querySelector('div#app').appendChild(Component())
