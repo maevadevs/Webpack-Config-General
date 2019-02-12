@@ -4,6 +4,7 @@
 require('dotenv').config()
 const { join } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin  =require('mini-css-extract-plugin')
 const { WDS_HOST, WDS_PORT } = process.env
 
 // WEBPACK CONFIG
@@ -28,7 +29,9 @@ const plugins = [
   new HtmlWebpackPlugin({
     title: 'Webpack Demo',
     template: 'src/templates/index.html'
-  })
+  }),
+  // Extract CSS to separate file: main.css
+  new MiniCssExtractPlugin()
 ]
 
 // --- LOADERS ---
@@ -40,7 +43,7 @@ const wbpModule = env => ({
     // include: [], // Must be a RegExp
     exclude: [/node_modules/], // Must be a RegExp
     use: [{ 
-      loader: 'style-loader' 
+      loader: MiniCssExtractPlugin.loader // Extract CSS to separate file: main.css
     }, { 
       loader: 'css-loader',
       options: { sourceMap: env === 'production' ? false : true }
