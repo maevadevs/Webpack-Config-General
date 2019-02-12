@@ -38,7 +38,15 @@ const wbpModule = env => ({
     test: /\.(s)?css$|\.sass$/, // Handle CSS, SASS, and SCSS files
     // include: [], // Must be a RegExp
     exclude: [/node_modules/], // Must be a RegExp
-    use: [{ loader: 'style-loader' }, { loader: 'css-loader',}, { loader: 'sass-loader' }]
+    use: [{ 
+      loader: 'style-loader' 
+    }, { 
+      loader: 'css-loader',
+      options: { sourceMap: true }
+    }, { 
+      loader: 'sass-loader',
+      options: { sourceMap: true }
+     }]
   }]
 })
 
