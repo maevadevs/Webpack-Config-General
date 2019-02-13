@@ -8,6 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const glob = require('glob')
 const PurgecssPlugin = require('purgecss-webpack-plugin')
+const Autoprefixer = require('autoprefixer')
 
 const { WDS_HOST, WDS_PORT } = process.env
 
@@ -64,6 +65,11 @@ const wbpModule = (env) => ({
       options: { 
         sourceMap: isProduction(env) ? false : true
       }
+    }, {
+      loader: 'postcss-loader',
+      options: {
+        plugins: () => [Autoprefixer()],
+      },
     }, { 
       loader: 'sass-loader',
       options: { 
