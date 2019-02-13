@@ -6,13 +6,13 @@
   "license": "MIT",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development --devtool false\"",
+    "dev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\"",
     "build": "webpack --env production && yarn start"
   },
   "dependencies": {
-    "bootstrap": "^4.3.0",
     "dotenv": "^6.2.0",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "purecss": "^1.0.0"
   },
   "devDependencies": {
     "css-loader": "^2.1.0",
@@ -24,6 +24,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "purgecss-webpack-plugin": "^1.4.0",
     "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14"

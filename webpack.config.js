@@ -4,12 +4,17 @@
 require('dotenv').config()
 const { join } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin  =require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const glob = require('glob')
 const PurgecssPlugin = require('purgecss-webpack-plugin')
 
 const { WDS_HOST, WDS_PORT } = process.env
+
+// HELPER FUNCTIONS
+// ****************
+
+const isProduction = env => env === 'production'
 
 // WEBPACK CONFIG
 // **************
@@ -18,10 +23,10 @@ const { WDS_HOST, WDS_PORT } = process.env
 // **********************
 
 const entry = { 
-  main: './src/index.js' 
+  index: './src/index.js' 
 }
 const output = {
-  filename: 'main.js',
+  filename: 'bundle.js',
   path: join(__dirname, 'dist')
 }
 
@@ -34,9 +39,9 @@ const plugins = [
     title: 'Webpack Demo',
     template: 'src/templates/index.html'
   }),
-  // Extract CSS to separate file: main.css
-  new MiniCssExtractPlugin(),
-  // Purge unused CSS
+  // Extract CSS to separate file for production mode: main.css
+  new MiniCssExtractPlugin({ filename: '[name].css' }),
+  // Purge unused CSS: Must be used AFTER MiniCssExtractPlugin. CSS-Mapping is lost
   new PurgecssPlugin({
     paths: glob.sync(`${join(__dirname, 'src')}/**/*`,  { nodir: true }),
   })
@@ -45,20 +50,26 @@ const plugins = [
 // --- LOADERS ---
 // ***************
 
-const wbpModule = env => ({
+const wbpModule = (env) => ({
   rules: [{ 
     test: /\.(s)?css$|\.sass$/, // Handle CSS, SASS, and SCSS files
-    // include: [], // Must be a RegExp
     exclude: [/node_modules/], // Must be a RegExp
-    use: [{ 
-      loader: MiniCssExtractPlugin.loader // Extract CSS to separate file: main.css
+    use: [{
+      loader: isProduction(env) ? MiniCssExtractPlugin.loader : 'style-loader', // Extract CSS to separate file: main.css
+      options: { 
+        sourceMap: isProduction(env) ? false : true
+      }
     }, { 
       loader: 'css-loader',
-      options: { sourceMap: env === 'production' ? false : true }
+      options: { 
+        sourceMap: isProduction(env) ? false : true
+      }
     }, { 
       loader: 'sass-loader',
-      options: { sourceMap: env === 'production' ? false : true }
-     }]
+      options: { 
+        sourceMap: isProduction(env) ? false : true
+      }
+    }]
   }]
 })
 
@@ -80,16 +91,6 @@ const devServer = {
 // ************************************
 
 const optimization = {
-  splitChunks: {
-    cacheGroups: {
-      styles: {
-        name: 'styles',
-        test: /\.css$/,
-        chunks: 'all',
-        enforce: true
-      }
-    }
-  },
   minimizer: [new OptimizeCSSAssetsPlugin({})]
 }
 
@@ -104,6 +105,7 @@ module.exports = (env, argv) => ({
   output,
   plugins,
   module: wbpModule(env),
-  optimization: env === 'production' ? optimization : {},
-  devServer: env === 'production' ? {} : devServer
+  optimization: isProduction(env) ? optimization : {},
+  devServer: isProduction(env) ? {} : devServer,
+  devtool: isProduction(env) ? false : 'cheal-module-eval-source-map'
 })

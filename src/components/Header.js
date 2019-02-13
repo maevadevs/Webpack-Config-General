@@ -1,19 +1,19 @@
 // STYLES
 // ******
 
-import './Component.scss'
+import './Header.scss'
 
 // COMPONENT
 // *********
 
-const Component = (text = 'This is a Component') => {
+const Header = (text = 'This is a Header') => {
   const h1 = document.createElement('h1')
   h1.innerHTML = text
-  h1.classList.add('Component')
+  h1.classList.add('Header')
   return h1
 }
 
 // EXPORT
 // ******
 
-export default Component
+export default Header
