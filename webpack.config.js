@@ -1,16 +1,32 @@
+/**
+ * This is the configuration file for Webpack.
+ * What webpack does here:
+ * - Entry: The entrypoint of the graph for resolving dependencies
+ * - Output: The output folder and file name of the bundle
+ * - Plugins:
+ *   - HtmlWebpackPlugin: Generate the static HTML contents from template
+ *   - MiniCssExtractPlugin: Extract CSS generated from SCSS files into separate file 
+ *     - This is for production only
+ *     - For development: We only use style-loader
+ *   - OptimizeCSSAssetsPlugin: Optimize and minify CSS (Production only)
+ *   - PurgecssPlugin: Purge unused CSS styles of external framework (Production only)
+ *   - Autoprefixer: Automatically prefix some CSS rules for browser compatibility. Used with postcss-loader and glob
+ */
+
 // DEPENDENCIES
 // ************
 
 require('dotenv').config()
 const { join } = require('path')
+const glob = require('glob')
+
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const glob = require('glob')
 const PurgecssPlugin = require('purgecss-webpack-plugin')
 const Autoprefixer = require('autoprefixer')
 
-const { WDS_HOST, WDS_PORT } = process.env
+const { WDS_HOST, WDS_PORT } = process.env // Settings for Webpack-dev-server
 
 // HELPER FUNCTIONS
 // ****************
@@ -40,18 +56,22 @@ const plugins = [
     title: 'Webpack Demo',
     template: 'src/templates/index.html'
   }),
-  // Extract CSS to separate file for production mode: main.css
-  new MiniCssExtractPlugin({ filename: '[name].css' }),
-  // Purge unused CSS: Must be used AFTER MiniCssExtractPlugin. CSS-Mapping is lost
+  // Extract CSS to separate file for production mode: [name] is the 'entry'
+  new MiniCssExtractPlugin({ 
+    filename: '[name].css' 
+  }),
+  // Purge unused CSS: Must be used AFTER MiniCssExtractPlugin. CSS-Mapping is lost. Used in production only.
   new PurgecssPlugin({
-    paths: glob.sync(`${join(__dirname, 'src')}/**/*`,  { nodir: true }),
+    paths: glob.sync(`${join(__dirname, 'src')}/**/*`,  { 
+      nodir: true 
+    }),
   })
 ]
 
-// --- LOADERS ---
-// ***************
+// --- MODULE / LOADERS ---
+// ************************
 
-const wbpModule = (env) => ({
+const webpackModule = env => ({
   rules: [{ 
     test: /\.(s)?css$|\.sass$/, // Handle CSS, SASS, and SCSS files
     exclude: [/node_modules/], // Must be a RegExp
@@ -96,22 +116,22 @@ const devServer = {
 // --- OPTIMIZATIONS FOR PRODUCTION ---
 // ************************************
 
-const optimization = {
+const optimize = {
   minimizer: [new OptimizeCSSAssetsPlugin({})]
 }
 
 // EXPORT CONFIG
 // *************
-// 'process.env' is passed to the function during the build call
-// Any other arguments during the call is passed as argv
+// 'process.env' is automatically passed to the function during the build call
+// Any other arguments during the call is passed as 'argv'
 
 module.exports = (env, argv) => ({
   mode: env,
   entry, 
   output,
   plugins,
-  module: wbpModule(env),
-  optimization: isProduction(env) ? optimization : {},
+  module: webpackModule(env),
+  optimization: isProduction(env) ? optimize : {},
   devServer: isProduction(env) ? {} : devServer,
   devtool: isProduction(env) ? false : 'cheal-module-eval-source-map'
 })
