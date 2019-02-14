@@ -1,6 +1,6 @@
 /**
  * This is the configuration file for Webpack.
- * What webpack does here:
+ * What settings we have for webpack here:
  * - Entry: The entrypoint of the graph for resolving dependencies
  * - Output: The output folder and file name of the bundle
  * - Plugins:
@@ -47,6 +47,38 @@ const output = {
   path: join(__dirname, 'dist')
 }
 
+// --- MODULE / LOADERS ---
+// ************************
+
+const webpackModule = env => ({
+  rules: [{
+    // Handle JS, JSX and MJS files
+    test: /\.m?jsx?$/,
+    exclude: [/(node_modules)/], // Must be a RegExp
+    use: [{
+      loader: 'babel-loader',
+      options: { presets: ['@babel/preset-env'] }
+    }]
+  }, { 
+    // Handle CSS, SASS, and SCSS files
+    test: [/\.s?css$/, /\.sass$/],
+    exclude: [/node_modules/], // Must be a RegExp
+    use: [{
+      loader: isProduction(env) ? MiniCssExtractPlugin.loader : 'style-loader', // Extract CSS to separate file: main.css
+      options: { sourceMap: isProduction(env) ? false : true }
+    }, { 
+      loader: 'css-loader',
+      options: { sourceMap: isProduction(env) ? false : true }
+    }, {
+      loader: 'postcss-loader',
+      options: { plugins: () => [Autoprefixer()] },
+    }, { 
+      loader: 'sass-loader',
+      options: { sourceMap: isProduction(env) ? false : true }
+    }]
+  }]
+})
+
 // --- PLUGINS ---
 // ***************
 
@@ -68,36 +100,12 @@ const plugins = [
   })
 ]
 
-// --- MODULE / LOADERS ---
-// ************************
+// --- OPTIMIZATIONS FOR PRODUCTION ---
+// ************************************
 
-const webpackModule = env => ({
-  rules: [{ 
-    test: /\.(s)?css$|\.sass$/, // Handle CSS, SASS, and SCSS files
-    exclude: [/node_modules/], // Must be a RegExp
-    use: [{
-      loader: isProduction(env) ? MiniCssExtractPlugin.loader : 'style-loader', // Extract CSS to separate file: main.css
-      options: { 
-        sourceMap: isProduction(env) ? false : true
-      }
-    }, { 
-      loader: 'css-loader',
-      options: { 
-        sourceMap: isProduction(env) ? false : true
-      }
-    }, {
-      loader: 'postcss-loader',
-      options: {
-        plugins: () => [Autoprefixer()],
-      },
-    }, { 
-      loader: 'sass-loader',
-      options: { 
-        sourceMap: isProduction(env) ? false : true
-      }
-    }]
-  }]
-})
+const optimize = {
+  minimizer: [new OptimizeCSSAssetsPlugin({})]
+}
 
 // --- WEBPACK-DEV-SERVER ---
 // **************************
@@ -111,13 +119,6 @@ const devServer = {
   contentBase: join(__dirname, 'dist') // Contents not passing through webpack are served directly from this folder
   // proxy: { "/api": "http://my.api/endpoint" } // If using multiple servers, proxy WDS to them
   // header: // Attach custom headers to your requests here
-}
-
-// --- OPTIMIZATIONS FOR PRODUCTION ---
-// ************************************
-
-const optimize = {
-  minimizer: [new OptimizeCSSAssetsPlugin({})]
 }
 
 // EXPORT CONFIG
