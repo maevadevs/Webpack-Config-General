@@ -1,6 +1,9 @@
 // DEPENDENCIES
 // ************
 
+// Required at the very entrance to get the env variables
+require('dotenv').config()
+
 const path = require('path')
 const express = require('express')
 
@@ -8,7 +11,7 @@ const express = require('express')
 // *************
 
 const server = express()
-const port = process.env.PORT || 8000 // Using Port 80 will needs sudo
+const port = process.env.PORT // Using Port 80 will needs sudo
 const servePath = path.join(__dirname, 'dist')
 
 // MIDDLEWARE: SERVE STATIC
