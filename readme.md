@@ -1,6 +1,6 @@
 # `Webpack-config-general`
 
-This is a generalized Webpack configuration for development and production. Settings defined for:
+This is a generalized Webpack configuration for development and production use. Settings defined for:
 
 - HTML: `index.html` templating and auto-generation
 - STYLES: `.sass`, `.scss`, `.css` bundling and optimizations
@@ -10,7 +10,7 @@ This is a generalized Webpack configuration for development and production. Sett
 
 ## Installation
 
-- Download from Github repo
+- Clone from this Github repo
 - All front-end files and folders should go under `/src`
 - All front-end production build output will be generated in `/dist`
 - Backend is currently defined under `server.js`: Change `package.json` scripts if customizing
