@@ -59,11 +59,30 @@ const getAllStyleLoadersRules = env => ({
   }]
 })
 
+// Small Images loaders Rules
+// Use url-loader for small images in development: Inline into bundle.js using base64
+// Use file-loader for large images in production: Output files in /dist
+// If wanting to generate all image files, defer everything to file-loader only
+const getImagesLoadersRules = () => ({
+  test: /\.(bmp|gif|jpe?g|png|tif?f)$/,
+  use: {
+    loader: 'url-loader',
+    options: {
+      limit: 10240, // Limit loading inline file size to 10kB
+    },
+    fallback: 'file-loader' // Default, but can also be changed
+  },
+})
+
+
+
+
 // Aggregate all Loader Rules under Webpack's "rules" setting
 const webpackModule = env => ({
   rules: [
     getBabelLoaderRules(), 
-    getAllStyleLoadersRules(env)
+    getAllStyleLoadersRules(env),
+    getImagesLoadersRules()
   ]
 })
 
