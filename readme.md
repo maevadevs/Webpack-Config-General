@@ -1,15 +1,31 @@
-# `Webpack-config-general`
+# `webpack-config-general`
 
-This is a generalized Webpack configuration for development and production use. Settings defined for:
+This is a generalized Webpack configuration for React development and production use. It can also be extended to be used for other non-React projects. The only difference will be in finding an alternative for `@babel/preset-react` to process the source files.
 
+## Structure
+
+- `/src`: All source files for application build
+  - `/components`: All React Components sources, logic and styles
+  - `/fonts`: All fonts sources. Supporting `eot`, `ttf`, `woff`, and `woff2` formats
+  - `/images`: All source images
+    - `/to-sprites`: All small images such as icons will be converted into sprites
+  - `/templates`: All HTML templates. For SPA, this might only contain `index.html`
+- `/dist`: All build files for production use
+- `/webpack.config.parts`: All parts of the `webpack.config.js` broken down by file. All parts are combined to create `webpack.config.js`
+- `/server.js`: Simple server file for the demo
+- `/.browserslistrc`: List of browsers to support using `autoprefixer`
+- `/.env`: All environment variables (Not part of the repo. Create one for your own project.)
+
+## Defined Settings
+
+- MODES: `development` and `production` mode choices
 - HTML: `index.html` templating and auto-generation
 - STYLES: `.sass`, `.scss`, `.css` bundling and optimizations
 - JS: `.js`, `.mjs`, `.jsx` bundling
-- MODES: `development` and `production` mode settings
-- BROWSER SUPPORT: Using `autoprefixer` with settings in `.browserslistrc`
+- BROWSER SUPPORT: Using `autoprefixer` with settings defined in `/.browserslistrc`
 - IMAGES: Support sprites for SCSS and image compression for production
 - FONTS: Support fonts file packaging
-- REACT: Use of React and JSX for component definition
+- REACT: Use of React and JSX for component definitions
 
 ## Installation
 
