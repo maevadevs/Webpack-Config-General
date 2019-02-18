@@ -27,7 +27,10 @@ const getBabelLoaderRules = () => ({
   use: [{
     loader: 'babel-loader',
     options: {
-      presets: ['@babel/preset-env'] // Targets specified in .browserslitsrc
+      presets: [
+        '@babel/preset-env', // Browser argets specified in .browserslitsrc
+        '@babel/preset-react'
+      ]
     }
   }]
 })

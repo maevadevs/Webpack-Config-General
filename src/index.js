@@ -1,9 +1,12 @@
 // DEPENDENCIES
 // ************
 
+import React from 'react'
+import ReactDOM from 'react-dom'
+
 import Header from './components/Header'
 import Button from './components/Button'
-import CatImage from './components/Profile'
+import Profile from './components/Profile'
 
 // STYLES
 // ******
@@ -13,8 +16,15 @@ import './index.scss'
 // COMPONENT
 // *********
 
-document.addEventListener('DOMContentLoaded', () => { 
-  document.querySelector('div#app').appendChild(Header())
-  document.querySelector('div#app').appendChild(Button())
-  document.querySelector('div#app').appendChild(CatImage())
-})
+const main = (
+  <div>
+    <Header />
+    <Button />
+    <Profile />
+  </div>
+)
+
+// RENDER
+// ******
+
+ReactDOM.render(main, document.querySelector('div#app'))

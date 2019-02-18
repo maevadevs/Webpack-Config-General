@@ -1,17 +1,17 @@
+// DEPENDENCIES
+// ************
+
+import React from 'react'
+
 // STYLES
 // ******
 
 import './Header.scss'
 
-// COMPONENT
-// *********
+// COMPONENT DEFINITION
+// ********************
 
-const Header = (text = 'This is a Header') => {
-  const h1 = document.createElement('h1')
-  h1.innerHTML = text
-  h1.classList.add('Header')
-  return h1
-}
+const Header = ({ text = "This is a Header" }) => <h1 className='Header'>{text}</h1>
 
 // EXPORT
 // ******
