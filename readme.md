@@ -2,6 +2,13 @@
 
 This is a generalized Webpack configuration for React development and production use. It can also be extended to be used for other non-React projects. The only difference will be in finding an alternative for `@babel/preset-react` to process the source files.
 
+## Installation
+
+- Clone from this Github repo
+- All front-end files and folders should go under `/src`
+- All front-end production build output will be generated in `/dist`
+- Backend is currently defined under `server.js`: Change `package.json` scripts if customizing
+
 ## Structure
 
 - `/src`: All source files for application build
@@ -26,13 +33,6 @@ This is a generalized Webpack configuration for React development and production
 - IMAGES: Support sprites for SCSS and image compression for production
 - FONTS: Support fonts file packaging
 - REACT: Use of React and JSX for component definitions
-
-## Installation
-
-- Clone from this Github repo
-- All front-end files and folders should go under `/src`
-- All front-end production build output will be generated in `/dist`
-- Backend is currently defined under `server.js`: Change `package.json` scripts if customizing
 
 ## Available Scripts
 
