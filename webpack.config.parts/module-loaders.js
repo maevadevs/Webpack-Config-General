@@ -81,12 +81,25 @@ const getImagesLoadersRules = env => ({
   }]
 })
 
+// Font loaders Rules
+// Use file-loader for all fonts: Output files in /dist
+const getFontLoadersRules = () => ({
+  test: /\.(ttf|eot|woff|woff2)$/,
+  use: [{
+    loader: 'file-loader',
+    options: {
+      name: `fonts/[name].[hash].[ext]`
+    }
+  }]
+})
+
 // Aggregate all Loader Rules under Webpack's "rules" setting
 const webpackModule = env => ({
   rules: [
     getBabelLoaderRules(), 
     getAllStyleLoadersRules(env),
-    getImagesLoadersRules()
+    getImagesLoadersRules(),
+    getFontLoadersRules()
   ]
 })
 

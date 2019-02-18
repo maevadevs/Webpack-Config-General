@@ -1,1 +1,15 @@
 @import '~purecss/build/pure.css';
+
+// Using Fonts
+@font-face {
+  font-family: 'raleway';
+  src: url('./fonts/raleway-regular.woff2') format('woff2'),
+    url('./fonts/raleway-regular.woff') format('woff'),
+    url('./fonts/raleway-regular.eot') format('embedded-opentype'),
+    url('./fonts/raleway-regular.ttf') format('truetype');
+    /* Add other formats as you see fit */
+};
+
+* {
+  font-family: raleway;
+}
