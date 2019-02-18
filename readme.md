@@ -8,6 +8,7 @@ This is a generalized Webpack configuration for development and production use. 
 - MODES: `development` and `production` mode settings
 - BROWSER SUPPORT: Using `autoprefixer` with settings in `.browserslistrc`
 - IMAGES: Support sprites for SCSS and image compression for production
+- REACT: Use of React and JSX for component definition
 
 ## Installation
 
