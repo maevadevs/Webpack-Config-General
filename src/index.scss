@@ -1,1 +1,7 @@
-@import '~purecss/build/pure.css'
+@import '~purecss/build/pure.css';
+
+body {
+  background-image: url("./images/cat.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+}

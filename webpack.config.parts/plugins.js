@@ -1,16 +1,18 @@
 /**
  * - HtmlWebpackPlugin: Generate the static HTML contents from template
  * - PurgecssPlugin: Purge unused CSS styles of external framework (Production only)
+ * - SpritesmithPlugin: Setup sprites images
  */
 
 // DEPENDENCIES
 // ************
 
-const { join } = require('path')
+const { join, resolve } = require('path')
 const glob = require('glob')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const PurgecssPlugin = require('purgecss-webpack-plugin')
+const SpritesmithPlugin = require('webpack-spritesmith')
 
 // PLUGINS
 // *******
@@ -31,7 +33,22 @@ const plugins = [
     paths: glob.sync(`${join(__dirname, '..', 'src')}/**/*`,  { 
       nodir: true 
     }),
-  })
+  }),
+  // Setup sprites for any images contained in images/to-sprites
+  // The name of the image will become an scss variable to be used
+  new SpritesmithPlugin({
+    src: {
+      cwd: resolve(__dirname, '../src/images/to-sprites'),
+      glob: '*.png'
+    },
+    target: {
+      image: resolve(__dirname, '../src/sprites-generated/sprite.png'),
+      css: resolve(__dirname, '../src/sprites-generated/sprite.scss')
+    },
+    apiOptions: {
+      cssImageRef: '~sprite.png'
+    }
+})
 ]
 
 // EXPORTS

@@ -16,7 +16,7 @@ const entry = {
 }
 const output = {
   filename: 'bundle.js',
-  path: join(__dirname, 'dist')
+  path: join(__dirname, '..', 'dist') // Relative to this file
 }
 
 // EXPORTS

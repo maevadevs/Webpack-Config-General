@@ -13,6 +13,7 @@ const { isProduction } = require('./webpack.config.parts/helper-functions')
 // Webpack Config Parts
 const { entry, output } = require('./webpack.config.parts/entry-output')
 const { webpackModule } = require('./webpack.config.parts/module-loaders')
+const { resolve } = require('./webpack.config.parts/resolve')
 const { plugins } = require('./webpack.config.parts/plugins')
 const { optimize } = require('./webpack.config.parts/optimization')
 const { devServer } = require('./webpack.config.parts/webpack-dev-server')
@@ -28,6 +29,7 @@ module.exports = (env, argv) => ({
   output,
   plugins,
   module: webpackModule(env),
+  resolve,
   optimization: isProduction(env) ? optimize : {},
   devServer: isProduction(env) ? {} : devServer,
   devtool: isProduction(env) ? false : 'cheal-module-eval-source-map'

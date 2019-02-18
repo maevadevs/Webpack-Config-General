@@ -9,6 +9,7 @@
 // DEPENDENCIES
 // ************
 
+const { join } = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const Autoprefixer = require('autoprefixer')
 
@@ -59,29 +60,41 @@ const getAllStyleLoadersRules = env => ({
   }]
 })
 
-// Small Images loaders Rules
-// Use url-loader for small images in development: Inline into bundle.js using base64
-// Use file-loader for large images in production: Output files in /dist
-// If wanting to generate all image files, defer everything to file-loader only
-const getImagesLoadersRules = () => ({
-  test: /\.(bmp|gif|jpe?g|png|tif?f)$/,
-  use: {
-    loader: 'url-loader',
-    options: {
-      limit: 10240, // Limit loading inline file size to 10kB
-    },
-    fallback: 'file-loader' // Default, but can also be changed
-  },
+// Stylus loader: Required for handling sprites
+const getStylusLoader = () => ({
+  test: /\.styl$/, 
+  use: [
+    'style-loader',
+    'css-loader',
+    'stylus-loader'
+  ]
 })
 
-
-
+// Images loaders Rules
+// Use file-loader for all images: Output files in /dist
+const getImagesLoadersRules = env => ({
+  test: /\.(bmp|gif|jpe?g|png|svg|tif?f)$/,
+  use: [{
+    loader: 'file-loader',
+    options: {
+      name: isProduction(env) ? '[name].[hash].[ext]' : `[name].[hash].[ext]`,
+      outputPath: '../dist/images' // Relative to this file
+    }
+  }, {
+    // For compressing pictures: Should be applied first
+    loader: 'image-webpack-loader',
+    options: {
+      disable: !isProduction(env), // Only enable when in production
+    }
+  }]
+})
 
 // Aggregate all Loader Rules under Webpack's "rules" setting
 const webpackModule = env => ({
   rules: [
     getBabelLoaderRules(), 
     getAllStyleLoadersRules(env),
+    getStylusLoader(),
     getImagesLoadersRules()
   ]
 })
