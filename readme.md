@@ -7,6 +7,7 @@ This is a generalized Webpack configuration for development and production use. 
 - JS: `.js`, `.mjs`, `.jsx` bundling
 - MODES: `development` and `production` mode settings
 - BROWSER SUPPORT: Using `autoprefixer` with settings in `.browserslistrc`
+- IMAGES: Support for image compression and sprites for SCSS
 
 ## Installation
 
