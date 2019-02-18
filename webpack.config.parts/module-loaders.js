@@ -9,7 +9,6 @@
 // DEPENDENCIES
 // ************
 
-const { join } = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const Autoprefixer = require('autoprefixer')
 
