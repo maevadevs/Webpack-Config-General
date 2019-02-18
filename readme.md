@@ -5,7 +5,7 @@ This is a generalized Webpack configuration for React development and production
 ## Structure
 
 - `/src`: All source files for application build
-  - `/components`: All React Components sources, logic and styles
+  - `/components`: All React Components sources, logic and styles.
   - `/fonts`: All fonts sources. Supporting `eot`, `ttf`, `woff`, and `woff2` formats
   - `/images`: All source images
     - `/to-sprites`: All small images such as icons will be converted into sprites
