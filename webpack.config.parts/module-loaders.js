@@ -60,16 +60,6 @@ const getAllStyleLoadersRules = env => ({
   }]
 })
 
-// Stylus loader: Required for handling sprites
-const getStylusLoader = () => ({
-  test: /\.styl$/, 
-  use: [
-    'style-loader',
-    'css-loader',
-    'stylus-loader'
-  ]
-})
-
 // Images loaders Rules
 // Use file-loader for all images: Output files in /dist
 const getImagesLoadersRules = env => ({
@@ -77,8 +67,7 @@ const getImagesLoadersRules = env => ({
   use: [{
     loader: 'file-loader',
     options: {
-      name: isProduction(env) ? '[name].[hash].[ext]' : `[name].[hash].[ext]`,
-      outputPath: '../dist/images' // Relative to this file
+      name: `images/[name].[hash].[ext]`
     }
   }, {
     // For compressing pictures: Should be applied first
@@ -94,7 +83,6 @@ const webpackModule = env => ({
   rules: [
     getBabelLoaderRules(), 
     getAllStyleLoadersRules(env),
-    getStylusLoader(),
     getImagesLoadersRules()
   ]
 })
