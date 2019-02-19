@@ -29,6 +29,9 @@ const getBabelLoaderRules = () => ({
       presets: [
         '@babel/preset-env', // Browser argets specified in .browserslitsrc
         '@babel/preset-react'
+      ],
+      plugins: [
+        '@babel/plugin-syntax-dynamic-import'
       ]
     }
   }]

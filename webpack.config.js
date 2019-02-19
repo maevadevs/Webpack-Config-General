@@ -25,7 +25,7 @@ const { devServer } = require('./webpack.config.parts/webpack-dev-server')
 
 module.exports = (env, argv) => ({
   mode: env,
-  entry, 
+  entry,
   output,
   plugins,
   module: webpackModule(env),

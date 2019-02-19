@@ -19,7 +19,7 @@ import './index.scss'
 const main = (
   <div>
     <Header />
-    <Button />
+    <Button text='This is a button' />
     <Profile />
   </div>
 )

@@ -6,14 +6,14 @@ import React from 'react'
 // STYLES
 // ******
 
-import './Button.scss'
+import './Header.scss'
 
 // COMPONENT DEFINITION
 // ********************
 
-const Button = ({ text = 'This is Button' }) => <div className='round-button pure-button'>{text}</div>
+const Header = ({ text = 'This is a Header' }) => <h1 className='Header'>{text}</h1>
 
 // EXPORT
 // ******
 
-export default Button
+export default Header

@@ -7,7 +7,7 @@ import React from 'react'
 // ******
 
 import './Profile.scss'
-import profileImgSrc from '../images/cat.jpg'
+import profileImgSrc from '../../images/cat.jpg'
 
 // COMPONENT DEFINITION
 // ********************
