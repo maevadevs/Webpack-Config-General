@@ -11,7 +11,8 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 // ***************************
 
 const optimize = {
-  minimizer: [new OptimizeCSSAssetsPlugin({})]
+  minimizer: [new OptimizeCSSAssetsPlugin({})],
+  splitChunks: { chunks: 'initial' }  // Bundle splitting: To extract a separate vendor bundle from the node_modules
 }
 
 // EXPORTS
