@@ -3,23 +3,18 @@
  * - Output: The output folder and file name of the bundle
  */
 
-// DEPENDENCIES
-// ************
-
-const { join } = require('path')
-
 // ENTRY / OUTPUT
 // **************
 
-const entry = { 
-  index: './src/index.js' 
-}
-const output = {
+const setupEntry = () => ({
+  index: './src/index.js'
+})
+const setupOutput = paths => ({
   filename: 'bundle.js',
-  path: join(__dirname, '..', 'dist') // Relative to this file
-}
+  path: paths.dist
+})
 
 // EXPORTS
 // *******
 
-module.exports = { entry, output }
+module.exports = { setupEntry, setupOutput }

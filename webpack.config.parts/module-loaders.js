@@ -1,5 +1,5 @@
 /**
- * - MiniCssExtractPlugin: Extract CSS generated from SCSS files into separate file 
+ * - MiniCssExtractPlugin: Extract CSS generated from SCSS files into separate file
  *   - This is for production only
  *   - For development: We only use style-loader
  * - Autoprefixer: Automatically prefix some CSS rules for browser compatibility
@@ -11,6 +11,7 @@
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const Autoprefixer = require('autoprefixer')
+const { join } = require('path')
 
 // Helper Functions
 const { isProduction } = require('./helper-functions')
@@ -39,28 +40,28 @@ const getBabelLoaderRules = () => ({
 
 // Style loaders Rules
 // Handle CSS, SASS, and SCSS files
-const getAllStyleLoadersRules = env => ({ 
+const getAllStyleLoadersRules = env => ({
   test: [/\.s?css$/, /\.sass$/],
   exclude: [/node_modules/],
   use: [{
     loader: isProduction(env) ? MiniCssExtractPlugin.loader : 'style-loader',
-    options: { 
-      sourceMap: isProduction(env) ? false : true
+    options: {
+      sourceMap: !isProduction(env)
     }
-  }, { 
+  }, {
     loader: 'css-loader',
-    options: { 
-      sourceMap: isProduction(env) ? false : true 
+    options: {
+      sourceMap: !isProduction(env)
     }
   }, {
     loader: 'postcss-loader',
-    options: { 
-      plugins: () => [Autoprefixer()] 
-    },
-  }, { 
+    options: {
+      plugins: () => [Autoprefixer()]
+    }
+  }, {
     loader: 'sass-loader',
-    options: { 
-      sourceMap: isProduction(env) ? false : true 
+    options: {
+      sourceMap: !isProduction(env)
     }
   }]
 })
@@ -72,13 +73,13 @@ const getImagesLoadersRules = env => ({
   use: [{
     loader: 'file-loader',
     options: {
-      name: `images/[name].[hash].[ext]`
+      name: join('images', '[name].[hash].[ext]')
     }
   }, {
     // For compressing pictures: Should be applied first
     loader: 'image-webpack-loader',
     options: {
-      disable: !isProduction(env), // Only enable when in production
+      disable: !isProduction(env) // Only enable when in production
     }
   }]
 })
@@ -90,15 +91,15 @@ const getFontLoadersRules = () => ({
   use: [{
     loader: 'file-loader',
     options: {
-      name: `fonts/[name].[hash].[ext]`
+      name: join('fonts', '[name].[hash].[ext]')
     }
   }]
 })
 
 // Aggregate all Loader Rules under Webpack's "rules" setting
-const webpackModule = env => ({
+const setupModule = env => ({
   rules: [
-    getBabelLoaderRules(), 
+    getBabelLoaderRules(),
     getAllStyleLoadersRules(env),
     getImagesLoadersRules(),
     getFontLoadersRules()
@@ -108,4 +109,4 @@ const webpackModule = env => ({
 // EXPORTS
 // *******
 
-module.exports = { webpackModule }
+module.exports = { setupModule }

@@ -8,15 +8,25 @@
 
 // Required at the very entrance to get the env variables
 require('dotenv').config()
+const { join } = require('path')
 // Helper Functions
 const { isProduction } = require('./webpack.config.parts/helper-functions')
 // Webpack Config Parts
-const { entry, output } = require('./webpack.config.parts/entry-output')
-const { webpackModule } = require('./webpack.config.parts/module-loaders')
-const { resolve } = require('./webpack.config.parts/resolve')
-const { plugins } = require('./webpack.config.parts/plugins')
-const { optimization } = require('./webpack.config.parts/optimization')
-const { devServer } = require('./webpack.config.parts/webpack-dev-server')
+const { setupEntry, setupOutput } = require('./webpack.config.parts/entry-output')
+const { setupModule } = require('./webpack.config.parts/module-loaders')
+const { setupResolve } = require('./webpack.config.parts/resolve')
+const { setupPlugins } = require('./webpack.config.parts/plugins')
+const { setupOptimization } = require('./webpack.config.parts/optimization')
+const { setupDevServer } = require('./webpack.config.parts/webpack-dev-server')
+
+// PATHS
+// *****
+
+// Paths are mostly relative to this file, thus __dirname here
+const paths = {
+  src: join(__dirname, 'src'),
+  dist: join(__dirname, 'dist')
+}
 
 // EXPORT CONFIG
 // *************
@@ -25,12 +35,12 @@ const { devServer } = require('./webpack.config.parts/webpack-dev-server')
 
 module.exports = (env, argv) => ({
   mode: env,
-  entry,
-  output,
-  plugins,
-  module: webpackModule(env),
-  resolve,
-  optimization: isProduction(env) ? optimization : {},
-  devServer: isProduction(env) ? {} : devServer,
+  entry: setupEntry(paths),
+  output: setupOutput(paths),
+  plugins: setupPlugins(paths),
+  module: setupModule(env),
+  resolve: setupResolve(),
+  optimization: isProduction(env) ? setupOptimization() : {},
+  devServer: isProduction(env) ? {} : setupDevServer(paths),
   devtool: isProduction(env) ? false : 'cheal-module-eval-source-map'
 })

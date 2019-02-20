@@ -1,11 +1,11 @@
 // RESOLVE
 // *******
 
-const resolve = {
+const setupResolve = () => ({
   modules: ['node_modules', 'spritesmith-generated']
-}
+})
 
 // EXPORTS
 // *******
 
-module.exports = { resolve }
+module.exports = { setupResolve }
