@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon --watch webpack.config.js --watch webpack.config.parts --exec \"webpack-dev-server --env development\"",
-    "build": "rm -rf ./dist && webpack --env production && yarn start",
+    "build": "webpack --env production && yarn start",
     "eslint": "eslint"
   },
   "dependencies": {

@@ -25,7 +25,8 @@ const { setupDevServer } = require('./webpack.config.parts/webpack-dev-server')
 // Paths are mostly relative to this file, thus __dirname here
 const paths = {
   src: join(__dirname, 'src'),
-  dist: join(__dirname, 'dist')
+  dist: join(__dirname, 'dist'),
+  root: __dirname
 }
 
 // EXPORT CONFIG
@@ -37,7 +38,7 @@ module.exports = (env, argv) => ({
   mode: env,
   entry: setupEntry(paths),
   output: setupOutput(paths),
-  plugins: setupPlugins(paths),
+  plugins: setupPlugins(env, paths),
   module: setupModule(env),
   resolve: setupResolve(),
   optimization: isProduction(env) ? setupOptimization() : {},

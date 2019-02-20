@@ -14,45 +14,56 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const PurgecssPlugin = require('purgecss-webpack-plugin')
 const SpritesmithPlugin = require('webpack-spritesmith')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+// Helper Functions
+const { isProduction } = require('./helper-functions')
 
 // PLUGINS
 // *******
 
-const setupPlugins = paths => ([
-  // Auto-generate index.html
-  new HtmlWebpackPlugin({
-    title: 'Webpack Demo',
-    template: join(paths.src, 'templates', 'index.html')
-  }),
-  // Extract CSS to separate file for production mode: [name] is 'entry'
-  new MiniCssExtractPlugin({
-    filename: '[name].css'
-  }),
-  // Purge unused CSS: Must be used AFTER MiniCssExtractPlugin. CSS-Mapping is lost. Used in production only.
-  new PurgecssPlugin({
-    // '..' must be added because __dirname is webpack.config.parts
-    // paths: glob.sync(`${join(__dirname, '..', 'src')}/**/*`, {
-    paths: glob.sync(`${paths.src}/**/*`, {
-      nodir: true
-    })
-  }),
-  // Setup sprites for any images contained in images/to-sprites
-  // The name of the image will become an scss variable to be used
-  new SpritesmithPlugin({
-    src: {
-      cwd: resolve(paths.src, 'images', 'to-sprites'),
-      glob: '*.png'
-    },
-    target: {
-      image: resolve(paths.src, 'sprites-generated', 'sprite.png'),
-      css: resolve(paths.src, 'sprites-generated', 'sprite.scss')
-    },
-    apiOptions: {
-      cssImageRef: '~sprite.png'
-    }
-  }),
-  // Clean the build directory before each build
-  new CleanWebpackPlugin([])
+// Clean the build directory before each build
+const cleanWebpackPlugin = paths => (new CleanWebpackPlugin([paths.dist], {
+  root: paths.root,
+  verbose: true,
+  dry: false
+}))
+// Auto-generate index.html
+const htmlWebpackPlugin = paths => (new HtmlWebpackPlugin({
+  title: 'Webpack Demo',
+  template: join(paths.src, 'templates', 'index.html')
+}))
+// Extract CSS to separate file for production mode: [name] is 'entry'
+const miniCssExtractPlugin = () => (new MiniCssExtractPlugin({
+  filename: '[name].css'
+}))
+// Purge unused CSS: Must be used AFTER MiniCssExtractPlugin. CSS-Mapping is lost.
+const purgecssPlugin = paths => (new PurgecssPlugin({
+  paths: glob.sync(`${paths.src}/**/*`, {
+    nodir: true
+  })
+}))
+// Setup sprites for any images contained in images/to-sprites
+// The name of the image will become an scss variable to be used
+const spritesmithPlugin = paths => (new SpritesmithPlugin({
+  src: {
+    cwd: resolve(paths.src, 'images', 'to-sprites'),
+    glob: '*.png'
+  },
+  target: {
+    image: resolve(paths.src, 'sprites-generated', 'sprite.png'),
+    css: resolve(paths.src, 'sprites-generated', 'sprite.scss')
+  },
+  apiOptions: {
+    cssImageRef: '~sprite.png'
+  }
+}))
+
+// Combine all plugins instances
+const setupPlugins = (env, paths) => ([
+  isProduction(env) ? cleanWebpackPlugin(paths) : { apply: () => {} }, // production only
+  htmlWebpackPlugin(paths),
+  miniCssExtractPlugin(),
+  isProduction(env) ? purgecssPlugin(paths) : { apply: () => {} }, // production only
+  spritesmithPlugin(paths)
 ])
 
 // EXPORTS
