@@ -41,26 +41,26 @@ This is a generalized Webpack configuration for React development and production
 
 Run Webpack with development configurations.
 
-- Run `webpack-dev-server` in development mode
+- Running `webpack-dev-server` in development mode
   - Webpack `mode`: `development`
-  - Run in watch-mode
-  - Use DevTools
+  - Running in watch-mode
+  - Using DevTools
   - SCSS/CSS:
-    - Use `style-loader`
-    - Use SourceMaps
+    - Using `style-loader`
+    - Using SourceMaps
 - No output files: All outputs in memory with `webpack-dev-server`
-- Start a live server on `127.0.0.1:8080`
+- Starting a live server on `127.0.0.1:8080`
 
 ### - `yarn build`
 
 Run Webpack with production configurations.
 
-- Run `webpack.config.js` in production mode
+- Running `webpack.config.js` in production mode
   - Webpack `mode`: `production`
-  - Run once only
-  - Remove all DevTools
+  - Running once only
+  - Removing all DevTools
   - SCSS/CSS:
-    - Use `MiniCssExtractPlugin`, `OptimizeCSSAssetsPlugin`, and `PurgecssPlugin`
-    - Remove all SourceMaps
-- Produce all output files under `/dist` folder
-- Start a live server on `process.env.PORT`: `8000` by default
+    - Using `MiniCssExtractPlugin`, `OptimizeCSSAssetsPlugin`, and `PurgecssPlugin`
+    - Removing all SourceMaps
+- Producing all output files under `/dist` folder
+- Starting a live server on `process.env.PORT`: `8000` by default
