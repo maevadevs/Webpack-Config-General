@@ -33,6 +33,7 @@ This is a generalized Webpack configuration for React development and production
 - IMAGES: Support sprites for SCSS and image compression for production
 - FONTS: Support fonts file packaging
 - REACT: Use of React and JSX for component definitions
+- FOLDER: Automatically clean up the `dist` folder before each `yarn build`
 
 ## Available Scripts
 
