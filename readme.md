@@ -7,7 +7,7 @@ This is a generalized Webpack configuration for React development and production
 - Clone from this Github repo
 - All front-end files and folders should go under `/src`
 - All front-end production build output will be generated in `/dist`
-- Backend is currently defined under `server.js`: Change `package.json` scripts if customizing
+- Backend for demo is currently defined under `server.js`: Change `package.json` scripts if customizing
 
 ## Structure
 
