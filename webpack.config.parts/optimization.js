@@ -37,7 +37,9 @@ const setupOptimization = () => ({
         chunks: 'initial'
       }
     }
-  }
+  },
+  // Extract bundle manifest
+  runtimeChunk: { name: 'manifest' }
 })
 
 // EXPORTS

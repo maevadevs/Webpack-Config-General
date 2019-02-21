@@ -67,7 +67,7 @@ const getImagesLoadersRules = env => ({
   use: [{
     loader: 'file-loader',
     options: {
-      name: join('images', '[name].[hash].[ext]')
+      name: isProduction(env) ? join('images', '[name].[hash].[ext]') : join('images', '[name].[ext]')
     }
   }, {
     // For compressing pictures: Should be applied first
@@ -80,12 +80,12 @@ const getImagesLoadersRules = env => ({
 
 // Font loaders Rules
 // Use file-loader for all fonts: Output files in /dist
-const getFontLoadersRules = () => ({
+const getFontLoadersRules = (env) => ({
   test: /\.(ttf|eot|woff|woff2)$/,
   use: [{
     loader: 'file-loader',
     options: {
-      name: join('fonts', '[name].[hash].[ext]')
+      name: isProduction(env) ? join('fonts', '[name].[hash].[ext]') : join('fonts', '[name].[ext]')
     }
   }]
 })
@@ -95,8 +95,8 @@ const setupModule = env => ({
   rules: [
     getBabelLoaderRules(),
     getAllStyleLoadersRules(env),
-    getImagesLoadersRules(),
-    getFontLoadersRules()
+    getImagesLoadersRules(env),
+    getFontLoadersRules(env)
   ]
 })
 
