@@ -30,7 +30,9 @@ This is a generalized Webpack configuration for React development and production
 - STYLES: `.sass`, `.scss`, `.css` bundling and optimizations
 - JS: `.js`, `.mjs`, `.jsx` bundling and optimization
 - BROWSER SUPPORT: Using `autoprefixer` with settings defined in `/.browserslistrc`
-- IMAGES: Support sprites for SCSS and image compression for production
+- IMAGES:
+  - Support sprites for SCSS and image compression for production
+  - Lossless picture compression
 - FONTS: Support fonts file packaging
 - REACT: Use of React and JSX for component definitions
 - FOLDER: Automatically clean up the `dist` folder before each `yarn build`
@@ -48,6 +50,7 @@ Run Webpack with development configurations.
   - SCSS/CSS:
     - Using `style-loader`
     - Using SourceMaps
+  - IMAGES: No compressions
 - No output files: All outputs in memory with `webpack-dev-server`
 - Starting a live server on `127.0.0.1:8080`
 
@@ -63,5 +66,6 @@ Run Webpack with production configurations.
     - Using `MiniCssExtractPlugin`, `OptimizeCSSAssetsPlugin`, `PurgecssPlugin`, and `uglifyWebpackPlugin`
     - Removing all `console.log()`
     - Removing all SourceMaps
+  - IMAGES: Apply lossless compression using `imagemin-webpack`
 - Producing all output files under `/dist` folder
 - Starting a live server on `process.env.PORT`: `8000` by default

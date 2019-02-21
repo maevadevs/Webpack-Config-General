@@ -74,7 +74,7 @@ const spritesmithPlugin = paths => (new SpritesmithPlugin({
     cssImageRef: '~sprite.png'
   }
 }))
-//
+// Apply lossless image compression
 const imageMinPlugin = () => (new ImageminPlugin({
   bail: false, // Ignore errors on corrupted images
   cache: true,
