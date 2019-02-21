@@ -7,9 +7,10 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon --watch webpack.config.js --watch webpack.config.parts --exec \"webpack-dev-server --env development\"",
-    "build": "webpack --env production && yarn start",
-    "build:stats": "webpack --env production --profile --progress --display-reasons --json > build-stats.json && yarn start",
-    "build:perf": "concurrently \"NODE_ENV=debug webpack --env production\" \"yarn start\"",
+    "build": "webpack --env production",
+    "build:run": "yarn build && yarn start",
+    "build:stats": "yarn build --profile --progress --display-reasons --json > build-stats.json",
+    "build:perf": "concurrently \"NODE_ENV=debug yarn build\" \"yarn start\"",
     "eslint": "eslint"
   },
   "dependencies": {
@@ -47,7 +48,6 @@
     "imagemin-optipng": "^6.0.0",
     "imagemin-svgo": "^7.0.0",
     "imagemin-webpack": "^4.1.0",
-    "inspectpack": "^4.1.2",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.10",
