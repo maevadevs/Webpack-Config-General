@@ -1,7 +1,0 @@
-# RULES:
-# - Browser usage over 1%
-# - Or last two versions
-# - Or IE 8
-> 1%
-Last 2 versions
-IE 8

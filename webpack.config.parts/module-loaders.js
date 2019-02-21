@@ -2,17 +2,13 @@
  * - MiniCssExtractPlugin: Extract CSS generated from SCSS files into separate file
  *   - This is for production only
  *   - For development: We only use style-loader
- * - Autoprefixer: Automatically prefix some CSS rules for browser compatibility
- *   - Used with postcss-loader and glob
  */
 
 // DEPENDENCIES
 // ************
 
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { join } = require('path')
-
-// Helper Functions
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { isProduction } = require('./helper-functions')
 
 // MODULE / LOADERS

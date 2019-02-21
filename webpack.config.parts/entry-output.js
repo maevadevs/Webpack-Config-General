@@ -1,6 +1,6 @@
 /**
  * - Entry: The entrypoint of the graph for resolving dependencies
- * - Output: The output folder and file name of the bundle
+ * - Output: The output folder and file name of the generated bundles
  */
 
 const { isProduction } = require('./helper-functions')

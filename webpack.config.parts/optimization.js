@@ -1,5 +1,5 @@
 /**
- * Optimizations are applied on production mode only:
+ * Optimizations are applied for production mode only:
  * - UglifyWebpackPlugin: Optimize and minify JS
  * - splitChunks: Split vendor bundles into a separate bundle
  */
@@ -24,22 +24,25 @@ const uglifyWebpackPlugin = new UglifyWebpackPlugin({
   }
 })
 
+// SplitChuncks: Bundle splitting: To extract a separate vendor bundle from node_modules
+const splitChunks = {
+  cacheGroups: {
+    commons: {
+      test: /[\\/]node_modules[\\/]/,
+      name: 'vendors',
+      chunks: 'initial'
+    }
+  }
+}
+
+// runtimeChunck: Extract bundle manifest: Used for client-level caching
+const runtimeChunk = { name: 'manifest' }
+
 // Combine all now
 const setupOptimization = () => ({
-  // Minimize/Optimize JS
   minimizer: [uglifyWebpackPlugin],
-  // Bundle splitting: To extract a separate vendor bundle from node_modules
-  splitChunks: {
-    cacheGroups: {
-      commons: {
-        test: /[\\/]node_modules[\\/]/,
-        name: 'vendors',
-        chunks: 'initial'
-      }
-    }
-  },
-  // Extract bundle manifest
-  runtimeChunk: { name: 'manifest' }
+  splitChunks,
+  runtimeChunk
 })
 
 // EXPORTS

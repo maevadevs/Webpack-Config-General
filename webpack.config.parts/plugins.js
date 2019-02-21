@@ -1,6 +1,12 @@
 /**
+ * - BundleAnalyzerPlugin: Analyze the final bundle for performance
+ * - CleanWebpackPlugin: Clean the files in `dist` folder before generating the bundles
+ * - DuplicatePackageCheckerPlugin: Check for duplicate packages in the bundle
  * - HtmlWebpackPlugin: Generate the static HTML contents from template
- * - PurgecssPlugin: Purge unused CSS styles of external framework (Production only)
+ * - imagemin collection: Handle images compression
+ * - MiniCssExtractPlugin: Extract CSS into a separate file
+ * - OptimizeCSSAssetsWebpackPlugin: Minify and compact CSS
+ * - PurgecssPlugin: Purge unused CSS styles of external framework
  * - SpritesmithPlugin: Setup sprites images
  */
 
@@ -11,19 +17,20 @@ const { join, resolve } = require('path')
 const glob = require('glob')
 const cssnano = require('cssnano')
 
-const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const PurgecssPlugin = require('purgecss-webpack-plugin')
-const SpritesmithPlugin = require('webpack-spritesmith')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ImageminPlugin = require('imagemin-webpack')
 const imageminGifsicle = require('imagemin-gifsicle')
 const imageminJpegtran = require('imagemin-jpegtran')
 const imageminOptipng = require('imagemin-optipng')
 const imageminSvgo = require('imagemin-svgo')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+const PurgecssPlugin = require('purgecss-webpack-plugin')
+const SpritesmithPlugin = require('webpack-spritesmith')
+
 // Helper Functions
 const { isProduction, isProductionDebug } = require('./helper-functions')
 
