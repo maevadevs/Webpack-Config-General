@@ -53,6 +53,7 @@ Run Webpack with development configurations.
   - IMAGES: No compressions
 - No output files: All outputs in memory with `webpack-dev-server`
 - Starting a live server on `127.0.0.1:8080`
+- Enable Webpack Bundle Ananlyzer on `127.0.0.1:8888`
 
 ### - `yarn build`
 
