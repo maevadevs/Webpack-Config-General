@@ -39,7 +39,6 @@ const getAllStyleLoadersRules = env => ({
   test: [/\.s?css$/, /\.sass$/],
   exclude: [/node_modules/],
   use: [{
-    // loader: isProduction(env) ? MiniCssExtractPlugin.loader : 'style-loader',
     loader: MiniCssExtractPlugin.loader,
     options: {
       sourceMap: !isProduction(env)
