@@ -28,7 +28,7 @@ This is a generalized Webpack configuration for React development and production
 - MODES: `development` and `production` mode choices
 - HTML: `index.html` templating and auto-generation
 - STYLES: `.sass`, `.scss`, `.css` bundling and optimizations
-- JS: `.js`, `.mjs`, `.jsx` bundling
+- JS: `.js`, `.mjs`, `.jsx` bundling and optimization
 - BROWSER SUPPORT: Using `autoprefixer` with settings defined in `/.browserslistrc`
 - IMAGES: Support sprites for SCSS and image compression for production
 - FONTS: Support fonts file packaging
@@ -60,7 +60,8 @@ Run Webpack with production configurations.
   - Running once only
   - Removing all DevTools
   - SCSS/CSS:
-    - Using `MiniCssExtractPlugin`, `OptimizeCSSAssetsPlugin`, and `PurgecssPlugin`
+    - Using `MiniCssExtractPlugin`, `OptimizeCSSAssetsPlugin`, `PurgecssPlugin`, and `uglifyWebpackPlugin`
+    - Removing all `console.log()`
     - Removing all SourceMaps
 - Producing all output files under `/dist` folder
 - Starting a live server on `process.env.PORT`: `8000` by default
