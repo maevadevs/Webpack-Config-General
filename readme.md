@@ -54,7 +54,7 @@ Run Webpack with development configurations.
   - Running in watch-mode
   - Using DevTools
   - SCSS/CSS:
-    - Using `style-loader`
+    - Using `MiniCssExtractPlugin`
     - Using SourceMaps
   - IMAGES: No compressions
 - No output files: All outputs in memory with `webpack-dev-server`
