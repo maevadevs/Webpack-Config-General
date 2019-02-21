@@ -69,3 +69,7 @@ Run Webpack with production configurations.
   - IMAGES: Apply lossless compression using `imagemin-webpack`
 - Producing all output files under `/dist` folder
 - Starting a live server on `process.env.PORT`: `8000` by default
+
+### - `yarn build:stats`
+
+Run Webpack with production configurations and generate a `build-stats.json`
