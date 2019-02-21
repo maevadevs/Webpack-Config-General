@@ -46,6 +46,6 @@ module.exports = (env, argv) => {
     resolve: setupResolve(),
     optimization: isProduction(env) ? setupOptimization() : {},
     devServer: isProduction(env) ? {} : setupDevServer(paths),
-    devtool: isProduction(env) ? false : 'cheal-module-eval-source-map'
+    devtool: isProduction(env) ? false : 'source-map'
   })
 }
