@@ -13,6 +13,7 @@ const cssnano = require('cssnano')
 
 const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const PurgecssPlugin = require('purgecss-webpack-plugin')
 const SpritesmithPlugin = require('webpack-spritesmith')
@@ -38,6 +39,10 @@ const cleanWebpackPlugin = paths => (new CleanWebpackPlugin([paths.dist], {
 const htmlWebpackPlugin = paths => (new HtmlWebpackPlugin({
   title: 'Webpack Demo',
   template: join(paths.src, 'templates', 'index.html')
+}))
+// Check if packages of different versions are present in the project
+const duplicatePackageCheckerPlugin = () => (new DuplicatePackageCheckerPlugin({
+  verbose: true // Also show module that is requiring each duplicate package
 }))
 // Extract CSS to separate file for production mode: [name] is 'entry'
 const miniCssExtractPlugin = () => (new MiniCssExtractPlugin({
@@ -93,6 +98,7 @@ const imageMinPlugin = () => (new ImageminPlugin({
 const setupPlugins = (env, paths) => ([
   isProduction(env) ? cleanWebpackPlugin(paths) : { apply: () => {} }, // production only
   htmlWebpackPlugin(paths),
+  duplicatePackageCheckerPlugin(),
   miniCssExtractPlugin(),
   isProduction(env) ? purgecssPlugin(paths) : { apply: () => {} }, // production only
   isProduction(env) ? optimizeCSSAssetsWebpackPlugin() : { apply: () => {} }, // production only
