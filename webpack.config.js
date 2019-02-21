@@ -9,6 +9,8 @@
 // Required at the very entrance to get the env variables
 require('dotenv').config()
 const { join } = require('path')
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
+const smp = new SpeedMeasurePlugin()
 // Helper Functions
 const { isProduction } = require('./webpack.config.parts/helper-functions')
 // Webpack Config Parts
@@ -34,14 +36,16 @@ const paths = {
 // 'process.env' is automatically passed to the function during the build call
 // Any other arguments during the call is passed under 'argv'
 
-module.exports = (env, argv) => ({
-  mode: env,
-  entry: setupEntry(paths),
-  output: setupOutput(paths, env),
-  plugins: setupPlugins(env, paths),
-  module: setupModule(env),
-  resolve: setupResolve(),
-  optimization: isProduction(env) ? setupOptimization() : {},
-  devServer: isProduction(env) ? {} : setupDevServer(paths),
-  devtool: isProduction(env) ? false : 'cheal-module-eval-source-map'
-})
+module.exports = (env, argv) => {
+  return smp.wrap({
+    mode: env,
+    entry: setupEntry(paths),
+    output: setupOutput(paths, env),
+    plugins: setupPlugins(env, paths),
+    module: setupModule(env),
+    resolve: setupResolve(),
+    optimization: isProduction(env) ? setupOptimization() : {},
+    devServer: isProduction(env) ? {} : setupDevServer(paths),
+    devtool: isProduction(env) ? false : 'cheal-module-eval-source-map'
+  })
+}
