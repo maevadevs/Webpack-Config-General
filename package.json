@@ -45,6 +45,7 @@
     "imagemin-optipng": "^6.0.0",
     "imagemin-svgo": "^7.0.0",
     "imagemin-webpack": "^4.1.0",
+    "inspectpack": "^4.1.2",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.10",
@@ -58,6 +59,7 @@
     "webpack-bundle-analyzer": "^3.0.4",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.0",
+    "webpack-jarvis": "^0.3.2",
     "webpack-spritesmith": "^1.0.0"
   }
 }

@@ -15,6 +15,8 @@ const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const Jarvis = require('webpack-jarvis')
+const { DuplicatesPlugin } = require('inspectpack/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const PurgecssPlugin = require('purgecss-webpack-plugin')
 const SpritesmithPlugin = require('webpack-spritesmith')
@@ -45,8 +47,22 @@ const htmlWebpackPlugin = paths => (new HtmlWebpackPlugin({
 const duplicatePackageCheckerPlugin = () => (new DuplicatePackageCheckerPlugin({
   verbose: true // Also show module that is requiring each duplicate package
 }))
-// Create an interactive treemap visualization of the contents of all your bundles
+// Create an interactive treemap visualization of the contents of all your bundles: port 8888
 const bundleAnalyzerPlugin = () => (new BundleAnalyzerPlugin())
+// Put in your browser all the relevant information you need from your webpack build whether in dev or in prod
+const jarvis = () => (new Jarvis({
+  port: 1337 // optional: set a port
+}))
+// Identifies unnecessarily duplicated code in webpack bundles
+const duplicatesPlugin = () => (new DuplicatesPlugin({
+  // Emit compilation warning or error? (Default: `false`)
+  emitErrors: false,
+  // Handle all messages with handler function (`(report: string)`)
+  // Overrides `emitErrors` output.
+  emitHandler: undefined,
+  // Display full duplicates information? (Default: `false`)
+  verbose: false
+}))
 // Extract CSS to separate file for production mode: [name] is 'entry'
 const miniCssExtractPlugin = () => (new MiniCssExtractPlugin({
   filename: 'styles.[contenthash].css' // Don't use chunkhash with CSS
@@ -103,7 +119,9 @@ const setupPlugins = (env, paths) => ([
   htmlWebpackPlugin(paths),
   duplicatePackageCheckerPlugin(),
   bundleAnalyzerPlugin(),
+  jarvis(),
   miniCssExtractPlugin(),
+  duplicatesPlugin(),
   isProduction(env) ? purgecssPlugin(paths) : { apply: () => {} }, // production only
   isProduction(env) ? optimizeCSSAssetsWebpackPlugin() : { apply: () => {} }, // production only
   spritesmithPlugin(paths),
