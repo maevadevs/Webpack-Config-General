@@ -110,9 +110,7 @@ const duplicatePackageCheckerPlugin = () => (new DuplicatePackageCheckerPlugin({
 // Create an interactive treemap visualization of the contents of all your bundles: port 8888
 const bundleAnalyzerPlugin = () => (new BundleAnalyzerPlugin())
 // Put in your browser all the relevant information you need from your webpack build whether in dev or in prod
-const jarvis = () => (new Jarvis({
-  port: 1337 // optional: set a port
-}))
+const jarvis = () => (new Jarvis({}))
 // Identifies unnecessarily duplicated code in webpack bundles
 const duplicatesPlugin = () => (new DuplicatesPlugin({
   // Emit compilation warning or error? (Default: `false`)
