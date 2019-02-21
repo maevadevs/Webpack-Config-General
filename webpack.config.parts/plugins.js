@@ -17,6 +17,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const PurgecssPlugin = require('purgecss-webpack-plugin')
 const SpritesmithPlugin = require('webpack-spritesmith')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ImageminPlugin = require('imagemin-webpack')
+const imageminGifsicle = require('imagemin-gifsicle')
+const imageminJpegtran = require('imagemin-jpegtran')
+const imageminOptipng = require('imagemin-optipng')
+const imageminSvgo = require('imagemin-svgo')
 // Helper Functions
 const { isProduction } = require('./helper-functions')
 
@@ -45,7 +50,7 @@ const purgecssPlugin = paths => (new PurgecssPlugin({
   })
 }))
 // Optimize and Minify CSS
-const optimizeCSSAssetsWebpackPlugin = () => new OptimizeCSSAssetsWebpackPlugin({
+const optimizeCSSAssetsWebpackPlugin = () => (new OptimizeCSSAssetsWebpackPlugin({
   canPrint: false, // if the plugin can print messages to the console
   cssProcessor: cssnano,
   cssProcessorOptions: {
@@ -53,7 +58,7 @@ const optimizeCSSAssetsWebpackPlugin = () => new OptimizeCSSAssetsWebpackPlugin(
     safe: true, // Run cssnano in safe mode to avoid potentially unsafe transformations
     autoprefixer: false
   }
-})
+}))
 // Setup sprites for any images contained in images/to-sprites
 // The name of the image will become an scss variable to be used
 const spritesmithPlugin = paths => (new SpritesmithPlugin({
@@ -69,15 +74,30 @@ const spritesmithPlugin = paths => (new SpritesmithPlugin({
     cssImageRef: '~sprite.png'
   }
 }))
+//
+const imageMinPlugin = () => (new ImageminPlugin({
+  bail: false, // Ignore errors on corrupted images
+  cache: true,
+  imageminOptions: {
+    // Lossless optimization with custom option
+    plugins: [
+      imageminGifsicle({ interlaced: true }),
+      imageminJpegtran({ progressive: true }),
+      imageminOptipng({ optimizationLevel: 5 }),
+      imageminSvgo({ removeViewBox: true })
+    ]
+  }
+}))
 
 // Combine all plugins instances
 const setupPlugins = (env, paths) => ([
   isProduction(env) ? cleanWebpackPlugin(paths) : { apply: () => {} }, // production only
   htmlWebpackPlugin(paths),
   miniCssExtractPlugin(),
-  isProduction(env) ? optimizeCSSAssetsWebpackPlugin() : { apply: () => {} }, // production only
   isProduction(env) ? purgecssPlugin(paths) : { apply: () => {} }, // production only
-  spritesmithPlugin(paths)
+  isProduction(env) ? optimizeCSSAssetsWebpackPlugin() : { apply: () => {} }, // production only
+  spritesmithPlugin(paths),
+  isProduction(env) ? imageMinPlugin() : { apply: () => {} } // production only // Make sure that the plugin is after any plugins that add images, example `CopyWebpackPlugin`
 ])
 
 // EXPORTS
