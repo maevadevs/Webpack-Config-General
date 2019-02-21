@@ -10,7 +10,6 @@
 // ************
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const Autoprefixer = require('autoprefixer')
 const { join } = require('path')
 
 // Helper Functions
@@ -52,11 +51,6 @@ const getAllStyleLoadersRules = env => ({
     loader: 'css-loader',
     options: {
       sourceMap: !isProduction(env)
-    }
-  }, {
-    loader: 'postcss-loader',
-    options: {
-      plugins: () => [Autoprefixer()]
     }
   }, {
     loader: 'sass-loader',

@@ -9,6 +9,9 @@
 
 const { join, resolve } = require('path')
 const glob = require('glob')
+const cssnano = require('cssnano')
+
+const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const PurgecssPlugin = require('purgecss-webpack-plugin')
@@ -41,6 +44,16 @@ const purgecssPlugin = paths => (new PurgecssPlugin({
     nodir: true
   })
 }))
+// Optimize and Minify CSS
+const optimizeCSSAssetsWebpackPlugin = () => new OptimizeCSSAssetsWebpackPlugin({
+  canPrint: false, // if the plugin can print messages to the console
+  cssProcessor: cssnano,
+  cssProcessorOptions: {
+    discardComments: { removeAll: true },
+    safe: true, // Run cssnano in safe mode to avoid potentially unsafe transformations
+    autoprefixer: false
+  }
+})
 // Setup sprites for any images contained in images/to-sprites
 // The name of the image will become an scss variable to be used
 const spritesmithPlugin = paths => (new SpritesmithPlugin({
@@ -62,6 +75,7 @@ const setupPlugins = (env, paths) => ([
   isProduction(env) ? cleanWebpackPlugin(paths) : { apply: () => {} }, // production only
   htmlWebpackPlugin(paths),
   miniCssExtractPlugin(),
+  isProduction(env) ? optimizeCSSAssetsWebpackPlugin() : { apply: () => {} }, // production only
   isProduction(env) ? purgecssPlugin(paths) : { apply: () => {} }, // production only
   spritesmithPlugin(paths)
 ])
