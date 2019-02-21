@@ -13,6 +13,8 @@ import './Header.scss'
 
 const Header = ({ text = 'This is a Header' }) => <h1 className='Header'>{text}</h1>
 
+console.log('hello')
+
 // EXPORT
 // ******
 
