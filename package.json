@@ -9,6 +9,7 @@
     "dev": "nodemon --watch webpack.config.js --watch webpack.config.parts --exec \"webpack-dev-server --env development\"",
     "build": "webpack --env production && yarn start",
     "build:stats": "webpack --env production --profile --progress --display-reasons --json > build-stats.json && yarn start",
+    "build:perf": "concurrently \"NODE_ENV=debug webpack --env production\" \"yarn start\"",
     "eslint": "eslint"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^1.0.1",
+    "concurrently": "^4.1.0",
     "css-loader": "^2.1.0",
     "cssnano": "^4.1.10",
     "duplicate-package-checker-webpack-plugin": "^3.0.0",
