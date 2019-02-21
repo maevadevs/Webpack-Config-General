@@ -3,14 +3,16 @@
  * - Output: The output folder and file name of the bundle
  */
 
+const { isProduction } = require('./helper-functions')
+
 // ENTRY / OUTPUT
 // **************
 
 const setupEntry = () => ({
   index: './src/index.js'
 })
-const setupOutput = paths => ({
-  filename: 'bundle.js',
+const setupOutput = (paths, env) => ({
+  filename: isProduction(env) ? 'bundle.[chunkhash].js' : 'bundle.js', // Add hash for client-level cache
   path: paths.dist
 })
 

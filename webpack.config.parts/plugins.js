@@ -41,7 +41,7 @@ const htmlWebpackPlugin = paths => (new HtmlWebpackPlugin({
 }))
 // Extract CSS to separate file for production mode: [name] is 'entry'
 const miniCssExtractPlugin = () => (new MiniCssExtractPlugin({
-  filename: '[name].css'
+  filename: 'styles.[contenthash].css' // Don't use chunkhash with CSS
 }))
 // Purge unused CSS: Must be used AFTER MiniCssExtractPlugin. CSS-Mapping is lost.
 const purgecssPlugin = paths => (new PurgecssPlugin({

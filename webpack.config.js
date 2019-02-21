@@ -37,7 +37,7 @@ const paths = {
 module.exports = (env, argv) => ({
   mode: env,
   entry: setupEntry(paths),
-  output: setupOutput(paths),
+  output: setupOutput(paths, env),
   plugins: setupPlugins(env, paths),
   module: setupModule(env),
   resolve: setupResolve(),
