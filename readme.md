@@ -39,6 +39,12 @@ This is a generalized Webpack configuration for React development and production
 
 ## Available Scripts
 
+### - `yarn start`
+
+Start a simple test production server
+
+- Starting a live server on `process.env.PORT`: `8000` by default
+
 ### - `yarn dev`
 
 Run Webpack with development configurations.
@@ -53,11 +59,10 @@ Run Webpack with development configurations.
   - IMAGES: No compressions
 - No output files: All outputs in memory with `webpack-dev-server`
 - Starting a live server on `127.0.0.1:8080`
-- Enable Webpack Bundle Ananlyzer on `127.0.0.1:8888`
 
 ### - `yarn build`
 
-Run Webpack with production configurations.
+Run Webpack with production configurations and generate `dist`.
 
 - Running `webpack.config.js` in production mode
   - Webpack `mode`: `production`
@@ -68,9 +73,22 @@ Run Webpack with production configurations.
     - Removing all `console.log()`
     - Removing all SourceMaps
   - IMAGES: Apply lossless compression using `imagemin-webpack`
-- Producing all output files under `/dist` folder
-- Starting a live server on `process.env.PORT`: `8000` by default
+- Producing all output files under `/dist` folder: Autoclean previous `/dist` first
+
+### - `yarn build:run`
+
+Run `yarn build` and `yarn start`
 
 ### - `yarn build:stats`
 
-Run Webpack with production configurations and generate a `build-stats.json`
+Run `yarn build` with all profile and progress details
+
+- Generate `build-stats.json`
+
+### - `build:perf`
+
+Run `yarn build` in a production-debug mode with `yarn start`
+
+- Use this for checking build performance and build Analysis
+- Enable `BundleAnalyzerPlugin` on `127.0.0.1:8888`
+- Enable `duplicatePackageCheckerPlugin`
