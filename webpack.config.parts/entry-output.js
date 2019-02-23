@@ -11,8 +11,10 @@ const { isProduction } = require('./helper-functions')
 const setupEntry = () => ({
   index: './src/index.js'
 })
+
 const setupOutput = (paths, env) => ({
-  filename: isProduction(env) ? 'bundle.[chunkhash].js' : 'bundle.js', // Add hash for client-level cache
+  // On production, add hash for client-level cache
+  filename: isProduction(env) ? 'bundle.[chunkhash].js' : 'bundle.js',
   path: paths.dist
 })
 

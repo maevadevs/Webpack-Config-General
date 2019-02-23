@@ -6,7 +6,7 @@ import React from 'react'
 // STYLES
 // ******
 
-import './Header.scss'
+import './HeaderStyles'
 
 // COMPONENT DEFINITION
 // ********************

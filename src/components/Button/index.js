@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 // STYLES
 // ******
 
-import './Button.scss'
+import './ButtonStyles'
 
 // COMPONENT DEFINITION
 // ********************

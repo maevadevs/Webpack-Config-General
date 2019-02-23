@@ -6,8 +6,8 @@ import React from 'react'
 // STYLES
 // ******
 
-import './Profile.scss'
-import profileImgSrc from '../../images/cat.jpg'
+import './ProfileStyles'
+import profileImgSrc from 'Images/cat.jpg'
 
 // COMPONENT DEFINITION
 // ********************

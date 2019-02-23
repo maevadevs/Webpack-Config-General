@@ -14,21 +14,15 @@ const { isProduction } = require('./helper-functions')
 // MODULE / LOADERS
 // ****************
 
-// Babel Loader Rules
-// Handle JS, JSX and MJS files
+// Babel Loader Rules: JS, JSX and MJS files
 const getBabelLoaderRules = () => ({
   test: /\.m?jsx?$/,
   exclude: [/(node_modules)/],
   use: [{
     loader: 'babel-loader',
     options: {
-      presets: [
-        '@babel/preset-env', // Browser targets specified in .browserslitsrc
-        '@babel/preset-react'
-      ],
-      plugins: [
-        '@babel/plugin-syntax-dynamic-import'
-      ]
+      presets: ['@babel/preset-env', '@babel/preset-react'],
+      plugins: ['@babel/plugin-syntax-dynamic-import']
     }
   }]
 })
@@ -40,19 +34,13 @@ const getAllStyleLoadersRules = env => ({
   exclude: [/node_modules/],
   use: [{
     loader: MiniCssExtractPlugin.loader,
-    options: {
-      sourceMap: !isProduction(env)
-    }
+    options: { sourceMap: !isProduction(env) }
   }, {
     loader: 'css-loader',
-    options: {
-      sourceMap: !isProduction(env)
-    }
+    options: { sourceMap: !isProduction(env) }
   }, {
     loader: 'sass-loader',
-    options: {
-      sourceMap: !isProduction(env)
-    }
+    options: { sourceMap: !isProduction(env) }
   }]
 })
 
@@ -69,7 +57,8 @@ const getImagesLoadersRules = env => ({
     // For compressing pictures: Should be applied first
     loader: 'image-webpack-loader',
     options: {
-      disable: !isProduction(env) // Only enable when in production
+      // Only enable when in production
+      disable: !isProduction(env)
     }
   }]
 })

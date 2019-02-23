@@ -43,7 +43,7 @@ module.exports = (env, argv) => {
     output: setupOutput(paths, env),
     plugins: setupPlugins(env, paths),
     module: setupModule(env),
-    resolve: setupResolve(),
+    resolve: setupResolve(paths),
     optimization: isProduction(env) ? setupOptimization() : {},
     devServer: isProduction(env) ? {} : setupDevServer(paths),
     devtool: isProduction(env) ? false : 'source-map'
